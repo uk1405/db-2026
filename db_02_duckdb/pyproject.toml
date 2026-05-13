@@ -1,5 +1,5 @@
 [project]
-name = "db-2026"
+name = "db-02-duckdb"
 version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
@@ -8,9 +8,4 @@ dependencies = [
     "duckdb>=1.5.2",
     "flet>=0.84.0",
     "pandas>=3.0.3",
-]
-
-[tool.uv.workspace]
-members = [
-    "db_02_duckdb",
 ]

@@ -1,40 +1,33 @@
-import flet as ft
+import duckdb
+import pandas
 
-def main(page: ft.Page):
-    page.title = "Flet counter example"
-    page.vertical_alignment = ft.MainAxisAlignment.CENTER
-    # page.horizontal_alignment = ft.CrossAxisAlignment.CENTER
+# 데이터베이스 접속 (메모리 사용)
+con = duckdb.connect()
 
-    # def on_btn_click(e):
-    #     # btn_change.content = '눌렸습니다'
-    #     text_counter.value = '반갑습니다'
-    #     page.update()
-
-    # text_counter = ft.Text('안녕하세요')
-    # btn_change = ft.Button('눌러 주세요', on_click=on_btn_click)
-
-    text_counter = ft.Text(
-        value='0',
-        size=100,
-        width=200,
-        text_align=ft.TextAlign.CENTER,
+# 테이블 생성
+con.execute("""
+    CREATE TABLE IF NOT EXISTS assets (
+        ticker VARCHAR PRIMARY KEY,
+        name VARCHAR,
+        type VARCHAR
     )
+""")
 
-    def minus_click(e):
-        text_counter.value = str(int(text_counter.value) - 1)
+# 데이터 삽입
+con.execute("""
+    INSERT INTO assets VALUES 
+        ('005930', '삼성전자', 'Stock'),
+        ('000660', 'SK하이닉스', 'Stock'),
+        ('148020', 'RISE 200', 'ETF'),
+        ('360750', 'TIGER 미국S&P500', 'ETF'),
+        ('379810', 'KODEX 미국나스닥100', 'ETF'),
+        ('411060', 'ACE KRX 금현물', 'ETF'),
+        ('449450', 'PLUS K방산', 'ETF')
+""")
 
-    def plus_click(e):
-        text_counter.value = str(int(text_counter.value) + 1)
+# 데이터 검색
+df = con.execute("SELECT * FROM assets").df()
+# con.close()
 
-    page.add(
-        ft.Row(
-            alignment=ft.MainAxisAlignment.CENTER,
-            controls = [
-                ft.IconButton(ft.Icons.REMOVE, on_click=minus_click),
-                text_counter,
-                ft.IconButton(ft.Icons.ADD, on_click=plus_click),
-            ]
-        )
-    )
-
-ft.run(main)
+print(df)
+# df
