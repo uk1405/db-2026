@@ -1,0 +1,23 @@
+# GUI & Visualization
+flet
+flet-datatable2
+flet-charts
+plotly-express
+kaleido
+
+# Data Frames
+pandas
+
+# DBMS
+duckdb
+pymysql
+oracledb
+psycopg2-binary
+
+# Finance Data Providers
+finance-datareader
+yfinance
+pykrx
+
+# Environment & Settings
+python-dotenv
